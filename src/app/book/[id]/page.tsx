@@ -1,4 +1,13 @@
+import { notFound } from "next/navigation";
 import style from "./page.module.css";
+
+//generateStaticParams로 내보내진 데이터 외에 페이지 생성을 하지 않는 방법
+// export const dynamicParams = false;
+
+// 정적인 파라미터를 생성하는 함수
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
 
 export default async function Page({
   params,
@@ -12,6 +21,9 @@ export default async function Page({
   );
 
   if (!response.ok) {
+    if (response.status === 404) {
+      notFound();
+    }
     return <div>오류가 발생했습니다 ...</div>;
   }
 
